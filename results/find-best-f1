@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# This script goes through all of the
+# statistics files in this directory 
+# and extracts the best model based
+# on matthews correlation coefficient.
+
+if ! command -v csvtool &> /dev/null
+then
+	echo "'csvtool' command was not found. \
+	You need to install csvtool command in \
+	order to use this script. You can
+	try 'sudo apt install csvtool'."
+	exit 1
+fi
+
+DIRS=(*/)
+echo "model_name,epoch,f1_score"
+
+for i in "${DIRS[@]}"; do
+	modified_i=$(echo "$i" | sed 's/\/$//')
+	echo -n "$modified_i,"
+	csvtool namedcol epoch,matthews_corrcoef,f1_score,accuracy_score ./$i/*_statistics.csv \
+	| LC_ALL=C sort -t, -nk2 | tail -1 | awk -F, '{print $1 "," $4}'
+done
