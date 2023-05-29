@@ -1,2 +1,0 @@
-model_name,input_size,hidden_layers,output_size,batch_size,epochs,learning_rate,threshold,dropout_rate,weight_ratio,optimizer,loss_function,activation_function
-ProtTrans-2,1025,700 350 ,1,20,100,0.001,None,0.2,4.683683212180622,Adam,BCELoss,ReLU
